@@ -13,12 +13,26 @@
 <body>
     <div class="container">
         <div class="row">
-            <h3>Items</h3>
+            <div class="col-md-6">
+                <h3>Counters</h3>
+                <a href="javascript:void(0);" class="js-anchor-name">
+                    By Name
+                </a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="javascript:void(0);" class="js-anchor-group">
+                    By Group
+                </a>
+            </div>
+            <div class="col-md-6 align-items-center">
+                <h3 class="text-right">
+                    <a href="index.html">Back</a>
+                </h3>
+            </div>
         </div>
         <div class="row">
-            <h3>
-                <a href="counters.html">Counters</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="biases.html">Biases</a>
-            </h3>
+            <div class="col-md-4" id="counter-1-div"></div>
+            <div class="col-md-4" id="counter-2-div"></div>
+            <div class="col-md-4" id="counter-div"></div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -27,6 +41,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
         crossorigin="anonymous"></script>
+    <script src="js/taffy.js"></script>
+    <script src="js/artists.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/processCounters.js"></script>
 </body>
 
 </html>
