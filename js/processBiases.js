@@ -2,8 +2,8 @@ if (!window.Favorites) {
     window.Favorites = {};
 }
 
-Favorites.tableHeaderB = '<table class="table table-condensed"><tr><th><b>Group</b></th><th><b>Name</b></th><th><b>Birth date</b></th><th><b>Age</b></th><th><b>Zodiac</b></th><th><b>Chinese</b></th></tr>';
-Favorites.tableFooterB = '</table>';
+Favorites.cardHeader = '<div class="thumbnail"><div class="caption">';
+Favorites.cardFooter = '</div></div>';
 
 Favorites.avg1 = 0;
 Favorites.you1 = 0;
@@ -27,6 +27,9 @@ $(function () {
     $('#anchor-age').click(Favorites.populateByAge);
     $('#anchor-zodiac').click(Favorites.populateByZodiac);
     $('#anchor-chinese').click(Favorites.populateByChinese);
+    $('#anchor-city').click(Favorites.populateByCity);
+    $('#anchor-country').click(Favorites.populateByCountry);
+    $('#anchor-agency').click(Favorites.populateByAgency);
 });
 
 Favorites.updateTotals = function () {
@@ -71,19 +74,6 @@ Favorites.updateTotals = function () {
     });
     Favorites.avg2 = sumAges / countAges;
     Favorites.total2 = countAges;
-
-    // console.log(Favorites.avg1.toFixed(2));
-    // console.log(Favorites.you1);
-    // console.log(Favorites.old1);
-    // console.log(Favorites.youName1 );
-    // console.log(Favorites.oldName1 );
-
-    // console.log(Favorites.avg2.toFixed(2));
-    // console.log(Favorites.you2);
-    // console.log(Favorites.old2);
-    // console.log(Favorites.youName2 );
-    // console.log(Favorites.oldName2 );
-
 }
 
 Favorites.populateByGroup = function () {
@@ -95,26 +85,51 @@ Favorites.populateByGroup = function () {
 
 Favorites.populateByPerson = function (person, orderBy, position) {
     $div = $('#biases-' + person + '-div');
-    var string = Favorites.tableHeaderB;
+    var string = '';
+
     var previous = null;
-    var cssName = 'info';
+    var firstTime = true;
     biases({ person: person }).order(orderBy).each(function (item) {
-        var change = Favorites.isChange(item, position, previous);
-        if (change) {
-            cssName = cssName === 'info' ? 'warning' : 'info';
+        if (firstTime) {
+            previous = Favorites.getPrevious(item, position);
+            string += '<div class="thumbnail"><div class="caption"><div class="row"><div class="col-md-12"><a href="javascript:void(0);" style="color:brown;"><b>' + previous + '</b></a></div></div></div></div>';
+            firstTime = false;
+        } else {
+            var change = Favorites.isChange(item, position, previous);
+            previous = Favorites.getPrevious(item, position);
+            if (change) {
+                string += '<div class="thumbnail"><div class="caption"><div class="row"><div class="col-md-12"><a href="javascript:void(0);" style="color:brown;"><b>' + previous + '</b></a></div></div></div></div>';
+            }
         }
-        string += '<tr class="' + cssName + '">'
-        string += '<td>' + item.groupName + '</td>';
-        string += '<td>' + item.name + '</td>';
-        string += '<td>' + Common.fromYYYYMMDDToDDMMYYYY(item.birthDate) + '</td>';
-        string += '<td>' + item.age + '</td>';
-        string += '<td>' + item.zodiac + '</td>';
-        string += '<td>' + item.chineseZodiac + '</td>';
+
+        string += Favorites.cardHeader;
+
+        string += '<div class="row"><div class="col-md-12"><h4><a href="javascript:void(0);"><b>';
+        string += item.name + ' - ' + item.groupName;
+        string += '</b></a></h4></div></div>';
+
+        string += '<div class="row">';
+        string += '<div class="col-md-3"><b>Birthday:</b><br/>' + Common.fromYYYYMMDDToDDMMYYYY(item.birthDate) + '</div>';
+        string += '<div class="col-md-2"><b>Age:</b><br/>' + item.age + '</div>';
+        string += '<div class="col-md-3"><b>Country:</b><br/>' + item.country + '</div>';
+        string += '<div class="col-md-4"><b>Real Name:</b><br/>' + item.realName + '</div>';
+        string += '</div>';
+
+        string += '<div class="row">';
+        string += '<div class="col-md-3"><b>Zodiac:</b><br/>' + item.zodiac + '</div>';
+        string += '<div class="col-md-2"><b>Chinese:</b><br/>' + item.chineseZodiac + '</div>';
+        string += '<div class="col-md-3"><b>City:</b><br/>' + item.city + '</div>';
+        string += '<div class="col-md-4"><b>Agency:</b><br/>' + item.agency + '</div>';
+        string += '</div>';
+
+        string += '<div class="row">';
+        string += '<div class="col-md-12"><b>Positions:</b><br/>' + item.positions + '</div>';
+        string += '</div>';
+
+        string += Favorites.cardFooter;
+
         previous = Favorites.getPrevious(item, position);
     });
-
-    string += Favorites.totalHtml(person);
-    string += Favorites.tableFooterB;
 
     $div.html(string);
 }
@@ -145,6 +160,12 @@ Favorites.isChange = function (item, position, previous) {
             return item.zodiac !== previous;
         case 5:
             return item.chineseZodiac !== previous;
+        case 6:
+            return item.city !== previous;
+        case 7:
+            return item.country !== previous;
+        case 8:
+            return item.agency !== previous;
         default:
             return false;
     }
@@ -162,6 +183,12 @@ Favorites.getPrevious = function (item, position) {
             return item.zodiac;
         case 5:
             return item.chineseZodiac;
+        case 6:
+            return item.city;
+        case 7:
+            return item.country;
+        case 8:
+            return item.agency;
         default:
             return null;
     }
@@ -195,6 +222,27 @@ Favorites.populateByChinese = function () {
     Favorites.populateByPerson(2, 'chineseZodiacId', 5);
 }
 
+Favorites.populateByCity = function () {
+    Favorites.turnOn(6);
+
+    Favorites.populateByPerson(1, 'city', 6);
+    Favorites.populateByPerson(2, 'city', 6);
+}
+
+Favorites.populateByCountry = function () {
+    Favorites.turnOn(7);
+
+    Favorites.populateByPerson(1, 'country', 7);
+    Favorites.populateByPerson(2, 'country', 7);
+}
+
+Favorites.populateByAgency = function () {
+    Favorites.turnOn(8);
+
+    Favorites.populateByPerson(1, 'agency', 8);
+    Favorites.populateByPerson(2, 'agency', 8);
+}
+
 Favorites.turnOn = function (position) {
     switch (position) {
         case 1:
@@ -203,6 +251,9 @@ Favorites.turnOn = function (position) {
             $('#anchor-age').removeClass('bold');
             $('#anchor-zodiac').removeClass('bold');
             $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
             break;
         case 2:
             $('#anchor-group').removeClass('bold');
@@ -210,6 +261,9 @@ Favorites.turnOn = function (position) {
             $('#anchor-age').removeClass('bold');
             $('#anchor-zodiac').removeClass('bold');
             $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
             break;
         case 3:
             $('#anchor-group').removeClass('bold');
@@ -217,6 +271,9 @@ Favorites.turnOn = function (position) {
             $('#anchor-age').removeClass('bold').addClass('bold');
             $('#anchor-zodiac').removeClass('bold');
             $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
             break;
         case 4:
             $('#anchor-group').removeClass('bold');
@@ -224,6 +281,9 @@ Favorites.turnOn = function (position) {
             $('#anchor-age').removeClass('bold');
             $('#anchor-zodiac').removeClass('bold').addClass('bold');
             $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
             break;
         case 5:
             $('#anchor-group').removeClass('bold');
@@ -231,6 +291,39 @@ Favorites.turnOn = function (position) {
             $('#anchor-age').removeClass('bold');
             $('#anchor-zodiac').removeClass('bold');
             $('#anchor-chinese').removeClass('bold').addClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
+            break;
+        case 6:
+            $('#anchor-group').removeClass('bold');
+            $('#anchor-name').removeClass('bold');
+            $('#anchor-age').removeClass('bold');
+            $('#anchor-zodiac').removeClass('bold');
+            $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold').addClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
+            break;
+        case 7:
+            $('#anchor-group').removeClass('bold');
+            $('#anchor-name').removeClass('bold');
+            $('#anchor-age').removeClass('bold');
+            $('#anchor-zodiac').removeClass('bold');
+            $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold').addClass('bold');
+            $('#anchor-agency').removeClass('bold');
+            break;
+        case 8:
+            $('#anchor-group').removeClass('bold');
+            $('#anchor-name').removeClass('bold');
+            $('#anchor-age').removeClass('bold');
+            $('#anchor-zodiac').removeClass('bold');
+            $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold').addClass('bold');
             break;
     }
 }
