@@ -21,15 +21,34 @@ Favorites.total2 = 0;
 
 $(function () {
     Favorites.updateTotals();
-    Favorites.populateByGroup();
-    $('#anchor-group').click(Favorites.populateByGroup);
-    $('#anchor-name').click(Favorites.populateByName);
-    $('#anchor-age').click(Favorites.populateByAge);
-    $('#anchor-zodiac').click(Favorites.populateByZodiac);
-    $('#anchor-chinese').click(Favorites.populateByChinese);
-    $('#anchor-city').click(Favorites.populateByCity);
-    $('#anchor-country').click(Favorites.populateByCountry);
-    $('#anchor-agency').click(Favorites.populateByAgency);
+    Favorites.populateByGroup('asec');
+    // $('#anchor-group').click(Favorites.populateByGroup);
+    // $('#anchor-name').click(Favorites.populateByName);
+    // $('#anchor-age').click(Favorites.populateByAge);
+    // $('#anchor-zodiac').click(Favorites.populateByZodiac);
+    // $('#anchor-chinese').click(Favorites.populateByChinese);
+    // $('#anchor-city').click(Favorites.populateByCity);
+    // $('#anchor-country').click(Favorites.populateByCountry);
+    // $('#anchor-agency').click(Favorites.populateByAgency);
+
+    $('#group-asc').click(function () { Favorites.populateByGroup('asec'); });
+    $('#name-asc').click(function () { Favorites.populateByName('asec'); });
+    $('#age-asc').click(function () { Favorites.populateByAge('asec'); });
+    $('#zodiac-asc').click(function () { Favorites.populateByZodiac('asec'); });
+    $('#chinese-asc').click(function () { Favorites.populateByChinese('asec'); });
+    $('#city-asc').click(function () { Favorites.populateByCity('asec'); });
+    $('#country-asc').click(function () { Favorites.populateByCountry('asec'); });
+    $('#agency-asc').click(function () { Favorites.populateByAgency('asec'); });
+
+    $('#group-desc').click(function () { Favorites.populateByGroup('desc'); });
+    $('#name-desc').click(function () { Favorites.populateByName('desc'); });
+    $('#age-desc').click(function () { Favorites.populateByAge('desc'); });
+    $('#zodiac-desc').click(function () { Favorites.populateByZodiac('desc'); });
+    $('#chinese-desc').click(function () { Favorites.populateByChinese('desc'); });
+    $('#city-desc').click(function () { Favorites.populateByCity('desc'); });
+    $('#country-desc').click(function () { Favorites.populateByCountry('desc'); });
+    $('#agency-desc').click(function () { Favorites.populateByAgency('desc'); });
+
 });
 
 Favorites.updateTotals = function () {
@@ -76,11 +95,10 @@ Favorites.updateTotals = function () {
     Favorites.total2 = countAges;
 }
 
-Favorites.populateByGroup = function () {
+Favorites.populateByGroup = function (direction) {
     Favorites.turnOn(1);
-
-    Favorites.populateByPerson(1, 'groupName, name', 1);
-    Favorites.populateByPerson(2, 'groupName, name', 1);
+    Favorites.populateByPerson(1, 'groupName ' + direction + ', name', 1);
+    Favorites.populateByPerson(2, 'groupName ' + direction + ', name', 1);
 }
 
 Favorites.populateByPerson = function (person, orderBy, position) {
@@ -194,53 +212,53 @@ Favorites.getPrevious = function (item, position) {
     }
 }
 
-Favorites.populateByName = function () {
+Favorites.populateByName = function (direction) {
     Favorites.turnOn(2);
 
-    Favorites.populateByPerson(1, 'name, groupName', 2);
-    Favorites.populateByPerson(2, 'name, groupName', 2);
+    Favorites.populateByPerson(1, 'name ' + direction + ', groupName', 2);
+    Favorites.populateByPerson(2, 'name ' + direction + ', groupName', 2);
 }
 
-Favorites.populateByAge = function () {
+Favorites.populateByAge = function (direction) {
     Favorites.turnOn(3);
 
-    Favorites.populateByPerson(1, 'age', 3);
-    Favorites.populateByPerson(2, 'age', 3);
+    Favorites.populateByPerson(1, 'birthDate ' + direction, 3);
+    Favorites.populateByPerson(2, 'birthDate ' + direction, 3);
 }
 
-Favorites.populateByZodiac = function () {
+Favorites.populateByZodiac = function (direction) {
     Favorites.turnOn(4);
 
-    Favorites.populateByPerson(1, 'zodiacId', 4);
-    Favorites.populateByPerson(2, 'zodiacId', 4);
+    Favorites.populateByPerson(1, 'zodiacId ' + direction, 4);
+    Favorites.populateByPerson(2, 'zodiacId ' + direction, 4);
 }
 
-Favorites.populateByChinese = function () {
+Favorites.populateByChinese = function (direction) {
     Favorites.turnOn(5);
 
-    Favorites.populateByPerson(1, 'chineseZodiacId', 5);
-    Favorites.populateByPerson(2, 'chineseZodiacId', 5);
+    Favorites.populateByPerson(1, 'chineseZodiacId ' + direction, 5);
+    Favorites.populateByPerson(2, 'chineseZodiacId ' + direction, 5);
 }
 
-Favorites.populateByCity = function () {
+Favorites.populateByCity = function (direction) {
     Favorites.turnOn(6);
 
-    Favorites.populateByPerson(1, 'city', 6);
-    Favorites.populateByPerson(2, 'city', 6);
+    Favorites.populateByPerson(1, 'city ' + direction, 6);
+    Favorites.populateByPerson(2, 'city ' + direction, 6);
 }
 
-Favorites.populateByCountry = function () {
+Favorites.populateByCountry = function (direction) {
     Favorites.turnOn(7);
 
-    Favorites.populateByPerson(1, 'country', 7);
-    Favorites.populateByPerson(2, 'country', 7);
+    Favorites.populateByPerson(1, 'country ' + direction, 7);
+    Favorites.populateByPerson(2, 'country ' + direction, 7);
 }
 
-Favorites.populateByAgency = function () {
+Favorites.populateByAgency = function (direction) {
     Favorites.turnOn(8);
 
-    Favorites.populateByPerson(1, 'agency', 8);
-    Favorites.populateByPerson(2, 'agency', 8);
+    Favorites.populateByPerson(1, 'agency ' + direction, 8);
+    Favorites.populateByPerson(2, 'agency ' + direction, 8);
 }
 
 Favorites.turnOn = function (position) {

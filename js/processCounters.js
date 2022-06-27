@@ -14,9 +14,16 @@ Counters.counterTotal = 0;
 
 $(function () {
     Counters.updateTotals();
-    Counters.populateByName();
-    $('.js-anchor-name').click(Counters.populateByName);
-    $('.js-anchor-group').click(Counters.populateByGroup);
+    Counters.populateByName('desc');
+
+    $('#name-asc').click(function () { Counters.populateByName('asec'); });
+    $('#group-asc').click(function () { Counters.populateByGroup('asec'); });
+
+    $('#name-desc').click(function () { Counters.populateByName('desc'); });
+    $('#group-desc').click(function () { Counters.populateByGroup('desc'); });
+
+    // $('.js-anchor-name').click(Counters.populateByName);
+    // $('.js-anchor-group').click(Counters.populateByGroup);
 });
 
 Counters.updateTotals = function () {
@@ -27,22 +34,22 @@ Counters.updateTotals = function () {
     });
 }
 
-Counters.populateByName = function () {
+Counters.populateByName = function (direction) {
     Counters.turnOn(1);
-    Counters.populateByNameDiv('#counter-1-div', 1);
-    Counters.populateByNameDiv('#counter-2-div', 2);
-    Counters.populateByNameDiv('#counter-div', 0);
+    Counters.populateByNameDiv('#counter-1-div', direction, 1);
+    Counters.populateByNameDiv('#counter-2-div', direction, 2);
+    Counters.populateByNameDiv('#counter-div', direction, 0);
 }
 
-Counters.showAscDesc = function() {
+Counters.showAscDesc = function () {
     $('.js-asc-desc').show();
 }
 
-Counters.populateByNameDiv = function (divId, counterType) {
+Counters.populateByNameDiv = function (divId, direction, counterType) {
     var $div = $(divId);
     var string = Counters.tableHeaderN;
 
-    var orderBy = counterType === 1 ? 'counter1 desc' : (counterType === 2 ? 'counter2 desc' : 'counter desc');
+    var orderBy = counterType === 1 ? 'counter1 ' + direction : (counterType === 2 ? 'counter2 ' + direction : 'counter ' + direction);
 
     artists().order(orderBy).each(function (item) {
         string += Counters.populateRowByName(item, counterType);
@@ -85,17 +92,17 @@ Counters.turnOn = function (position) {
     }
 }
 
-Counters.populateByGroup = function () {
+Counters.populateByGroup = function (direction) {
     Counters.turnOn(2);
-    var groupNameArr = Counters.filterGroupNames();
-    Counters.populateByGroupDiv('#counter-1-div', groupNameArr, 1);
-    Counters.populateByGroupDiv('#counter-2-div', groupNameArr, 2);
-    Counters.populateByGroupDiv('#counter-div', groupNameArr, 0);
+    var groupNameArr = Counters.filterGroupNames(direction);
+    Counters.populateByGroupDiv('#counter-1-div', groupNameArr, direction, 1);
+    Counters.populateByGroupDiv('#counter-2-div', groupNameArr, direction, 2);
+    Counters.populateByGroupDiv('#counter-div', groupNameArr, direction, 0);
 }
 
-Counters.filterGroupNames = function () {
+Counters.filterGroupNames = function (direction) {
     var groupNameArr = [];
-    artists().order('groupName').each(function (item) {
+    artists().order('groupName ' + direction).each(function (item) {
         if (!groupNameArr.includes(item.groupName)) {
             groupNameArr.push(item.groupName);
         }
@@ -103,11 +110,11 @@ Counters.filterGroupNames = function () {
     return groupNameArr;
 }
 
-Counters.populateByGroupDiv = function (divId, groupNameArray, counterType) {
+Counters.populateByGroupDiv = function (divId, groupNameArray, direction, counterType) {
     var $div = $(divId);
     var string = '';
 
-    var orderBy = counterType === 1 ? 'counter1 desc' : (counterType === 2 ? 'counter2 desc' : 'counter desc');
+    var orderBy = counterType === 1 ? 'counter1 ' + direction : (counterType === 2 ? 'counter2 ' + direction : 'counter ' + direction);
     orderBy += ', name asc';
 
     for (var i = 0; i < groupNameArray.length; i++) {
