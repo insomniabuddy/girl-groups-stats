@@ -21,9 +21,6 @@ $(function () {
 
     $('#name-desc').click(function () { Counters.populateByName('desc'); });
     $('#group-desc').click(function () { Counters.populateByGroup('desc'); });
-
-    // $('.js-anchor-name').click(Counters.populateByName);
-    // $('.js-anchor-group').click(Counters.populateByGroup);
 });
 
 Counters.updateTotals = function () {
@@ -102,7 +99,7 @@ Counters.populateByGroup = function (direction) {
 
 Counters.filterGroupNames = function (direction) {
     var groupNameArr = [];
-    artists().order('groupName ' + direction).each(function (item) {
+    artists().order('groupNameUpper ' + direction).each(function (item) {
         if (!groupNameArr.includes(item.groupName)) {
             groupNameArr.push(item.groupName);
         }
@@ -115,7 +112,7 @@ Counters.populateByGroupDiv = function (divId, groupNameArray, direction, counte
     var string = '';
 
     var orderBy = counterType === 1 ? 'counter1 ' + direction : (counterType === 2 ? 'counter2 ' + direction : 'counter ' + direction);
-    orderBy += ', name asc';
+    orderBy += ', nameUpper asc';
 
     for (var i = 0; i < groupNameArray.length; i++) {
         string += Counters.tableHeaderG1;

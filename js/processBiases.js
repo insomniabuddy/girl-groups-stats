@@ -2,7 +2,7 @@ if (!window.Favorites) {
     window.Favorites = {};
 }
 
-Favorites.cardHeader = '<div class="thumbnail"><div class="caption">';
+Favorites.cardHeader = '<div class="thumbnail">';
 Favorites.cardFooter = '</div></div>';
 
 Favorites.avg1 = 0;
@@ -22,14 +22,6 @@ Favorites.total2 = 0;
 $(function () {
     Favorites.updateTotals();
     Favorites.populateByGroup('asec');
-    // $('#anchor-group').click(Favorites.populateByGroup);
-    // $('#anchor-name').click(Favorites.populateByName);
-    // $('#anchor-age').click(Favorites.populateByAge);
-    // $('#anchor-zodiac').click(Favorites.populateByZodiac);
-    // $('#anchor-chinese').click(Favorites.populateByChinese);
-    // $('#anchor-city').click(Favorites.populateByCity);
-    // $('#anchor-country').click(Favorites.populateByCountry);
-    // $('#anchor-agency').click(Favorites.populateByAgency);
 
     $('#group-asc').click(function () { Favorites.populateByGroup('asec'); });
     $('#name-asc').click(function () { Favorites.populateByName('asec'); });
@@ -97,8 +89,8 @@ Favorites.updateTotals = function () {
 
 Favorites.populateByGroup = function (direction) {
     Favorites.turnOn(1);
-    Favorites.populateByPerson(1, 'groupName ' + direction + ', name', 1);
-    Favorites.populateByPerson(2, 'groupName ' + direction + ', name', 1);
+    Favorites.populateByPerson(1, 'groupNameUpper ' + direction + ', nameUpper', 1);
+    Favorites.populateByPerson(2, 'groupNameUpper ' + direction + ', nameUpper', 1);
 }
 
 Favorites.populateByPerson = function (person, orderBy, position) {
@@ -121,6 +113,8 @@ Favorites.populateByPerson = function (person, orderBy, position) {
         }
 
         string += Favorites.cardHeader;
+        string += '<img src="img/' + item.artistId + '.jpg" width="200px">';
+        string += '<div class="caption">';
 
         string += '<div class="row"><div class="col-md-12"><h4><a href="javascript:void(0);"><b>';
         string += item.name + ' - ' + item.groupName;
@@ -215,8 +209,8 @@ Favorites.getPrevious = function (item, position) {
 Favorites.populateByName = function (direction) {
     Favorites.turnOn(2);
 
-    Favorites.populateByPerson(1, 'name ' + direction + ', groupName', 2);
-    Favorites.populateByPerson(2, 'name ' + direction + ', groupName', 2);
+    Favorites.populateByPerson(1, 'nameUpper ' + direction + ', groupNameUpper', 2);
+    Favorites.populateByPerson(2, 'nameUpper ' + direction + ', groupNameUpper', 2);
 }
 
 Favorites.populateByAge = function (direction) {
