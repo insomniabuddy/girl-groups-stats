@@ -13,3 +13,8 @@ a, a:hover {
 .td-right {
     text-align: right;
 }
+
+.artist-default {
+    background-image: url('../img/default.jpg');
+    background-size: 200px 200px;
+}
