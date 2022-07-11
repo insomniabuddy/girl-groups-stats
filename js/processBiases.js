@@ -113,7 +113,7 @@ Favorites.populateByPerson = function (person, orderBy, position) {
         }
 
         string += Favorites.cardHeader;
-        string += '<img src="img/' + item.artistId + '.jpg" width="200px" class="artist-default">';
+        string += '<img src="img/' + item.artistId + '.jpg" width="200px" height="200px" class="artist-default">';
         string += '<div class="caption">';
 
         string += '<div class="row"><div class="col-md-12"><h4><a href="javascript:void(0);"><b>';
