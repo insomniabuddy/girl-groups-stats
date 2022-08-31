@@ -135,7 +135,15 @@ Favorites.populateByPerson = function (person, orderBy, position) {
         string += '</div>';
 
         string += '<div class="row">';
-        string += '<div class="col-md-12"><b>Positions:</b><br/>' + item.positions + '</div>';
+        string += '<div class="col-md-3"><b>Height:</b><br/>' + item.heightStr + '</div>';
+        string += '<div class="col-md-2"><b>Weight:</b><br/>' + item.weightStr + '</div>';
+        string += '<div class="col-md-3"></div>';
+        string += '<div class="col-md-4"><b>Blood type:</b><br/>' + item.bloodType + '</div>';
+        string += '</div>';
+
+        string += '<div class="row">';
+        string += '<div class="col-md-8"><b>Positions:</b><br/>' + item.positions + '</div>';
+        string += '<div class="col-md-4"><b>Fandom:</b><br/>' + item.fandom + '</div>';
         string += '</div>';
 
         string += Favorites.cardFooter;
