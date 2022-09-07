@@ -31,6 +31,8 @@ $(function () {
     $('#city-asc').click(function () { Favorites.populateByCity('asec'); });
     $('#country-asc').click(function () { Favorites.populateByCountry('asec'); });
     $('#agency-asc').click(function () { Favorites.populateByAgency('asec'); });
+    $('#height-asc').click(function () { Favorites.populateByHeight('asec'); });
+    $('#bloodtype-asc').click(function () { Favorites.populateByBloodtype('asec'); });
 
     $('#group-desc').click(function () { Favorites.populateByGroup('desc'); });
     $('#name-desc').click(function () { Favorites.populateByName('desc'); });
@@ -40,6 +42,8 @@ $(function () {
     $('#city-desc').click(function () { Favorites.populateByCity('desc'); });
     $('#country-desc').click(function () { Favorites.populateByCountry('desc'); });
     $('#agency-desc').click(function () { Favorites.populateByAgency('desc'); });
+    $('#height-desc').click(function () { Favorites.populateByHeight('desc'); });
+    $('#bloodtype-desc').click(function () { Favorites.populateByBloodtype('desc'); });
 
 });
 
@@ -186,6 +190,10 @@ Favorites.isChange = function (item, position, previous) {
             return item.country !== previous;
         case 8:
             return item.agency !== previous;
+        case 9:
+            return item.heightStr !== previous;
+        case 10:
+            return item.bloodType !== previous;
         default:
             return false;
     }
@@ -209,6 +217,10 @@ Favorites.getPrevious = function (item, position) {
             return item.country;
         case 8:
             return item.agency;
+        case 9:
+            return item.heightStr;
+        case 10:
+            return item.bloodType;
         default:
             return null;
     }
@@ -263,6 +275,20 @@ Favorites.populateByAgency = function (direction) {
     Favorites.populateByPerson(2, 'agency ' + direction, 8);
 }
 
+Favorites.populateByHeight = function (direction) {
+    Favorites.turnOn(9);
+
+    Favorites.populateByPerson(1, 'height ' + direction, 9);
+    Favorites.populateByPerson(2, 'height ' + direction, 9);
+}
+
+Favorites.populateByBloodtype = function (direction) {
+    Favorites.turnOn(10);
+
+    Favorites.populateByPerson(1, 'bloodType ' + direction, 10);
+    Favorites.populateByPerson(2, 'bloodType ' + direction, 10);
+}
+
 Favorites.turnOn = function (position) {
     switch (position) {
         case 1:
@@ -274,6 +300,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 2:
             $('#anchor-group').removeClass('bold');
@@ -284,6 +312,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 3:
             $('#anchor-group').removeClass('bold');
@@ -294,6 +324,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 4:
             $('#anchor-group').removeClass('bold');
@@ -304,6 +336,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 5:
             $('#anchor-group').removeClass('bold');
@@ -314,6 +348,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 6:
             $('#anchor-group').removeClass('bold');
@@ -324,6 +360,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold').addClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 7:
             $('#anchor-group').removeClass('bold');
@@ -334,6 +372,8 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold').addClass('bold');
             $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
             break;
         case 8:
             $('#anchor-group').removeClass('bold');
@@ -344,6 +384,32 @@ Favorites.turnOn = function (position) {
             $('#anchor-city').removeClass('bold');
             $('#anchor-country').removeClass('bold');
             $('#anchor-agency').removeClass('bold').addClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
+            break;
+        case 9:
+            $('#anchor-group').removeClass('bold');
+            $('#anchor-name').removeClass('bold');
+            $('#anchor-age').removeClass('bold');
+            $('#anchor-zodiac').removeClass('bold');
+            $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold').addClass('bold');
+            $('#anchor-bloodtype').removeClass('bold');
+            break;
+        case 10:
+            $('#anchor-group').removeClass('bold');
+            $('#anchor-name').removeClass('bold');
+            $('#anchor-age').removeClass('bold');
+            $('#anchor-zodiac').removeClass('bold');
+            $('#anchor-chinese').removeClass('bold');
+            $('#anchor-city').removeClass('bold');
+            $('#anchor-country').removeClass('bold');
+            $('#anchor-agency').removeClass('bold');
+            $('#anchor-height').removeClass('bold');
+            $('#anchor-bloodtype').removeClass('bold').addClass('bold');
             break;
     }
 }
